@@ -1,0 +1,12 @@
+{
+    "permissions": {
+        "api": {
+            "groups": [
+                "create",
+                "read",
+                "update",
+                "delete"
+            ]
+        }
+    }
+}

@@ -1,0 +1,16 @@
+type User @model {
+  id: ID!
+  username: String!
+  email: String!
+  password: String!
+  gatherings_owned: [Gathering]
+  gatherings_joined: [Gathering]
+}
+
+type Gathering @model {
+	id: ID!
+	title: String!
+  description: String!
+	owner: User!
+  members: [User]
+}
