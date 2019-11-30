@@ -1,7 +1,7 @@
-import { request } from "https";
-
+require("dotenv").config();
 const { GraphQLDataSource } = require("apollo-datasource-graphql");
 const { gql } = require("apollo-server");
+
 
 const GET_USERS = gql`
   {
@@ -14,18 +14,29 @@ const GET_USERS = gql`
   }  
 `
 
-export class AppSyncAPI extends GraphQLDataSource {
-  baseUrl = "https://7fakeccwargdvnrghci2wrcxru.appsync-api.us-east-1.amazonaws.com/graphql"
+class AppSyncAPI extends GraphQLDataSource {
+  constructor() {
+    super();
+
+    this.baseURL = "https://7fakeccwargdvnrghci2wrcxru.appsync-api.us-east-1.amazonaws.com/graphql"
+  }
 
   willSendRequest(req) {
-    if (!req.headers);
+    if (!req.headers) {
+      req.headers = {};
+    }
 
-    console.log(request.headers);
+    req.headers = {
+      "x-api-key": process.env.APPSYNC_API_KEY
+    }
+
   }
 
   async getUsers() {
     try {
       const response = await this.query(GET_USERS);
+
+      console.log(response.data)
 
       return response.data.listUsers
     } catch (err) {
@@ -34,3 +45,5 @@ export class AppSyncAPI extends GraphQLDataSource {
   }
 
 }
+
+module.exports = AppSyncAPI;

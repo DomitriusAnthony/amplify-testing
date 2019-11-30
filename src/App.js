@@ -1,9 +1,25 @@
-import React, { Component } from "react";
+import React from 'react';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/client';
 
-class App extends Component {
-  render() {
-    return <p>Welcome to the app</p>
+const GET_USERS = gql`
+  query {
+    getUsers {
+      username
+    }
   }
-}
+`
 
-export default App;
+export default function App() {
+  const { data, loading } = useQuery(GET_USERS);
+
+  if (loading) return <p>Loading...</p>;
+
+  data && console.log("The data: ", data)
+
+  return (
+    <div>
+      <p>Hello world!</p>
+    </div>
+  )
+}

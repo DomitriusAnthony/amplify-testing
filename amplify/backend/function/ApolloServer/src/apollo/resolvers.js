@@ -1,5 +1,7 @@
 module.exports = {
   Query: {
-    hello: () => console.log('hello')
+    getUsers: (_, args, { dataSources }) => {
+      return dataSources.appSyncAPI.getUsers().then(data => data.items);
+    }
   }
 };
