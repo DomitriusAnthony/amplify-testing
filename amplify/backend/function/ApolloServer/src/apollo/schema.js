@@ -1,6 +1,10 @@
 const { gql } = require("apollo-server");
 
 const typeDefs = gql`
+  input UserInput {
+    userId: ID!
+    
+  }
   type User {
     email: String!
     gatherings_joined: [Gathering]
@@ -19,7 +23,11 @@ const typeDefs = gql`
   }
 
   type Query {
-    getUsers: [User]
+    getUsers: [User]!
+  }
+
+  type Mutation {
+    createGathering(userId: ID! gathring: GatheringInput): Gathering!
   }
 `;
 

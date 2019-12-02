@@ -3,14 +3,15 @@ type User @model {
   username: String!
   email: String!
   password: String!
-  gatherings_owned: [Gathering]
-  gatherings_joined: [Gathering]
+  gatherings_owned: [Gathering] @connection
+  gatherings_joined: [Gathering] @connection
 }
 
 type Gathering @model {
 	id: ID!
 	title: String!
   description: String!
-	owner: User!
+	ownerId: ID!
+  owner: User! @connection(fields: ["ownerId"])
   members: [User]
 }

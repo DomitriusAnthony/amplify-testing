@@ -36,9 +36,32 @@ class AppSyncAPI extends GraphQLDataSource {
     try {
       const response = await this.query(GET_USERS);
 
-      console.log(response.data)
-
       return response.data.listUsers
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async createGathering(userId, gathering) {
+    try {
+      const CREATE_GATHERING = gql`
+        mutation CreateGathering($userId: ID! $gathering: Gathering!) {
+          createGathering(userId: $userID gathering: $gathering) {
+            title
+            id
+          }
+        }
+      `
+      const results = await this.mutation(CREATE_GATHERING, {
+        variables: {
+          userId,
+          gathering
+        }
+      })
+
+      console.log(results);
+
+      return results;
     } catch (err) {
       console.error(err);
     }
