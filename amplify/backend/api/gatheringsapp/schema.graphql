@@ -1,0 +1,18 @@
+type User @model {
+	id: ID!
+	username: String!
+  email: String!
+  password: String!
+  gatheringsOwned: [Gathering] @connection
+  gatheringsJoined: [Gathering] @connection
+}
+
+type Gathering @model {
+  id: ID!
+  ownerId: ID!
+  owner: User! @connection(fields: ["ownerId"])
+  title: String!
+  description: String!
+  members: [User] @connection
+}
+

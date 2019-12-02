@@ -10,11 +10,6 @@
             "StackName": "amplify-amplify-test-amptest-233944",
             "StackId": "arn:aws:cloudformation:us-east-1:026904412122:stack/amplify-amplify-test-amptest-233944/1ac1abf0-1199-11ea-ab90-12da3ecd6186",
             "AmplifyAppId": "d2zjtyxcozcqn4"
-        },
-        "categories": {
-            "function": {
-                "ApolloServer": {}
-            }
         }
     }
 }

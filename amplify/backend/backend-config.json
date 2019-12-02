@@ -1,6 +1,6 @@
 {
 	"api": {
-		"groups": {
+		"gatheringsapp": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {
@@ -9,7 +9,7 @@
 					"defaultAuthentication": {
 						"authenticationType": "API_KEY",
 						"apiKeyConfig": {
-							"description": "Groups API",
+							"description": "gatheringsapp",
 							"apiKeyExpirationDays": 7
 						}
 					}
@@ -18,20 +18,10 @@
 		}
 	},
 	"function": {
-		"ApolloServer": {
+		"ApolloServerLambda": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
-			"build": true,
-			"dependsOn": [
-				{
-					"category": "api",
-					"resourceName": "groups",
-					"attributes": [
-						"GraphQLAPIIdOutput",
-						"GraphQLAPIEndpointOutput"
-					]
-				}
-			]
+			"build": true
 		}
 	}
 }
