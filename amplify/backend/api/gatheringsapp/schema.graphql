@@ -2,7 +2,6 @@ type User @model {
 	id: ID!
 	username: String!
   email: String!
-  password: String!
   gatheringsOwned: [Gathering] @connection
   gatheringsJoined: [Gathering] @connection
 }

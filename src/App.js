@@ -1,25 +1,34 @@
 import React from 'react';
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/client';
-
-const GET_USERS = gql`
-  query {
-    getUsers {
-      username
-    }
-  }
-`
+import { Auth } from 'aws-amplify';
+import Signup from './components/Signup';
+import Login from './components/Login';
+import useCurrentUser from './hooks/useCurrentUser';
 
 export default function App() {
-  const { data, loading } = useQuery(GET_USERS);
+  const [user, setCurrentUser] = useCurrentUser();
 
-  if (loading) return <p>Loading...</p>;
+  const logout = async () => {
+    try {
+      await Auth.signOut();
+      setCurrentUser()
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
-  data && console.log("The data: ", data)
+  if (!user) {
+    return (
+      <div>
+        <Signup />
+        <Login />
+      </div>
+    )
+  }
 
   return (
     <div>
-      <p>Hello world!</p>
+      <p>{console.log(user.attributes.email)}</p>
+      <button onClick={() => logout()}>Sign out</button>
     </div>
   )
 }

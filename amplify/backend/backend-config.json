@@ -9,7 +9,7 @@
 					"defaultAuthentication": {
 						"authenticationType": "API_KEY",
 						"apiKeyConfig": {
-							"description": "gatheringsapp",
+							"description": "",
 							"apiKeyExpirationDays": 7
 						}
 					}
@@ -22,6 +22,13 @@
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true
+		}
+	},
+	"auth": {
+		"amplifytestea745fb0": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
 		}
 	}
 }

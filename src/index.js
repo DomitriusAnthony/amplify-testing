@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import ApolloClient from "apollo-client";
-import { InMemoryCache } from "apollo-cache-inmemory"
-import { HttpLink } from 'apollo-link-http';
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider, InMemoryCache, HttpLink } from "@apollo/client";
+import Amplify from 'aws-amplify';
+import config from './aws-exports';
 import "./index.css";
 import App from "./App";
 
@@ -26,6 +26,7 @@ cache.writeData({
   data: {}
 });
 
+Amplify.configure(config);
 ReactDOM.render(
   <ApolloProvider client={client}>
     <App />

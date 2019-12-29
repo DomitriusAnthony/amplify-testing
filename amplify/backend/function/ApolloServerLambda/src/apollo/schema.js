@@ -4,14 +4,12 @@ const typeDefs = gql`
   input UserInput {
     username: String!
     email: String!
-    password: String!
   }
 
   type User {
     id: ID!
     username: String!
     email: String!
-    password: String!
     gatheringsOwned: [Gathering] 
     gatheringsJoined: [Gathering]
   }
