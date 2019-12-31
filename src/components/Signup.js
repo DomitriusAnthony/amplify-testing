@@ -11,7 +11,7 @@ const CREATE_USER = gql`
   }
 `
 
-export default function Signup() {
+export default function Signup(props) {
   const [step, setStep] = React.useState(0);
 
   const [createUser] = useMutation(CREATE_USER);
@@ -36,7 +36,7 @@ export default function Signup() {
     const { username, authCode } = userFields;
 
     try {
-      await Auth.confirmSignUp(username, authCode);
+      await Auth.confirmSignUp(username, authCode).then(user => props.setCurrentUser(user));
 
       console.log("User successfully signed up");
 
@@ -54,7 +54,7 @@ export default function Signup() {
       }}>
         <input type="text" placeholder="Email.." onChange={e => setUserFields({ ...userFields, email: e.target.value })} />
         <input type="text" placeholder="Username.." onChange={e => setUserFields({ ...userFields, username: e.target.value })} />
-        <input type="text" placeholder="Password.." onChange={e => setUserFields({ ...userFields, password: e.target.value })} />
+        <input type="password" placeholder="Password.." onChange={e => setUserFields({ ...userFields, password: e.target.value })} />
         <button>Signup</button>
       </form>
     ) : (

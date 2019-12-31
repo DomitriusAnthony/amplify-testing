@@ -1,18 +1,15 @@
 import React from 'react';
 import { Auth } from 'aws-amplify';
-import useCurrentUser from '../hooks/useCurrentUser';
 
-export default function Login() {
+export default function Login(props) {
   const [userFields, setUserFields] = React.useState({
     password: '',
     username: '',
   });
 
-  const [user, setCurrentUser] = useCurrentUser();
-
   const login = async () => {
     try {
-      await Auth.signIn({ ...userFields })
+      await Auth.signIn({ ...userFields }).then(user => props.setCurrentUser(user))
     } catch (e) {
       console.log(e);
     }
@@ -22,8 +19,7 @@ export default function Login() {
 
     <form onSubmit={e => {
       e.preventDefault();
-      login().then(u => setCurrentUser(u));
-      console.log(user)
+      login();
     }}>
       <input type="text" placeholder="Username.." onChange={e => setUserFields({ ...userFields, username: e.target.value })} />
       <input type="text" placeholder="Password.." onChange={e => setUserFields({ ...userFields, password: e.target.value })} />

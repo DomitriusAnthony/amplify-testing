@@ -4,8 +4,9 @@ import ApolloClient from "apollo-client";
 import { ApolloProvider, InMemoryCache, HttpLink } from "@apollo/client";
 import Amplify from 'aws-amplify';
 import config from './aws-exports';
+
+import Routes from './routes';
 import "./index.css";
-import App from "./App";
 
 import resolvers from "./apollo/resolvers";
 
@@ -29,7 +30,7 @@ cache.writeData({
 Amplify.configure(config);
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <Routes />
   </ApolloProvider>,
   document.getElementById("root")
 );

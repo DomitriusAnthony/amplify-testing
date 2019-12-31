@@ -19,16 +19,16 @@ export default function App() {
   if (!user) {
     return (
       <div>
-        <Signup />
-        <Login />
+        <Signup setCurrentUser={setCurrentUser} />
+        <Login setCurrentUser={setCurrentUser} />
       </div>
     )
-  }
-
-  return (
-    <div>
-      <p>{console.log(user.attributes.email)}</p>
-      <button onClick={() => logout()}>Sign out</button>
-    </div>
-  )
+  } else {
+    return (
+      <div>
+        <p>{user.attributes.email}</p>
+        <button onClick={() => logout()}>Sign out</button>
+      </div>
+    )
+  };
 }
