@@ -17,8 +17,7 @@ export default function Landing(props) {
 
   return (
     <div>
-      <p>{props.user.attributes.email}</p>
-
+      <p>{props.user.username}</p>
       <button onClick={() => logout()}>Sign out</button>
     </div>
   )

@@ -63,7 +63,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-amplify-test-amptest-233944-deployment",
-					"S3Key": "amplify-builds/ApolloServerLambda-57546b54453533335562-build.zip"
+					"S3Key": "amplify-builds/ApolloServerLambda-4a343962525945465a43-build.zip"
 				}
 			}
 		},

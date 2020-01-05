@@ -8,6 +8,10 @@ import Landing from '../components/Landing';
 export default function Routes() {
   const [user, loading, setCurrentUser] = useCurrentUser();
 
+  if (loading) {
+    return <p>Loading..</p>
+  }
+
   return (
     <Router>
       {!user && (
@@ -15,7 +19,7 @@ export default function Routes() {
       )}
 
       {user && (
-        <Landing path="/" user={user} loading={loading} setCurrentUser={setCurrentUser} />
+        <Landing path="/" user={user.getUser} loading={loading} setCurrentUser={setCurrentUser} />
       )}
     </Router>
   )
