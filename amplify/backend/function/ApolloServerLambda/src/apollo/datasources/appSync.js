@@ -20,6 +20,7 @@ const GET_USER = gql`
     getUser(id: $id) {
       username
       email
+      id
     }
   }
 `
@@ -58,20 +59,11 @@ class AppSyncAPI extends GraphQLDataSource {
 
       const users = appSyncUsers.data.listUsers.items;
 
-
       const currentUser = users && users.find(u => email === u.username);
 
-      const appSyncUser = await this.query(GET_USER, {
-        variables: {
-          id: currentUser.id
-        }
-      });
+      console.log(currentUser)
 
-      const user = appSyncUser.data.getUser
-
-      console.log("User -->", user);
-
-      return user;
+      return currentUser;
     } catch (e) {
       console.log(e);
     }
@@ -80,8 +72,12 @@ class AppSyncAPI extends GraphQLDataSource {
   async createGathering(userId, gathering) {
     try {
       const CREATE_GATHERING = gql`
-        mutation CreateGathering($userId: ID! $gathering: Gathering!) {
-          createGathering(userId: $userID gathering: $gathering) {
+        mutation {
+          createGathering(input: {
+            ownerId: userId
+            title: gathering.title
+            description: gathering.description
+          }) {
             title
             id
           }

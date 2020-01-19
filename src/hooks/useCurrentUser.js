@@ -1,18 +1,19 @@
 import { gql, useQuery } from '@apollo/client';
 
-import useCognito from './useCognito';
+import useCognitoSession from './useCognitoSession';
 
 const CURRENT_USER = gql`
   query GetUser($email: String!) {
     getUser(email: $email) {
       username
       email
+      id
     }
   }
 `
 
 export default function useCurrentUser() {
-  const [currentUser, setCurrentUser] = useCognito();
+  const [currentUser, setCurrentUser] = useCognitoSession();
 
   const { data, loading } = useQuery(CURRENT_USER, {
     variables: {
