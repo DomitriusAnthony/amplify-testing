@@ -4,14 +4,25 @@ const { gql } = require("apollo-server");
 
 
 const GET_USERS = gql`
-  {
+  query {
     listUsers {
       items {
         username
+        email
         id
       }
     }
-  }  
+  }
+`;
+
+const GET_USER = gql`
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      username
+      email
+      id
+    }
+  }
 `
 
 class AppSyncAPI extends GraphQLDataSource {
@@ -42,11 +53,31 @@ class AppSyncAPI extends GraphQLDataSource {
     }
   }
 
+  async getUser(email) {
+    try {
+      const appSyncUsers = await this.query(GET_USERS)
+
+      const users = appSyncUsers.data.listUsers.items;
+
+      const currentUser = users && users.find(u => email === u.username);
+
+      console.log(currentUser)
+
+      return currentUser;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async createGathering(userId, gathering) {
     try {
       const CREATE_GATHERING = gql`
-        mutation CreateGathering($userId: ID! $gathering: Gathering!) {
-          createGathering(userId: $userID gathering: $gathering) {
+        mutation {
+          createGathering(input: {
+            ownerId: userId
+            title: gathering.title
+            description: gathering.description
+          }) {
             title
             id
           }
@@ -67,11 +98,11 @@ class AppSyncAPI extends GraphQLDataSource {
     }
   };
 
-  async createUser(username, password, email) {
+  async createUser(username, email) {
     try {
       const CREATE_USER = gql`
-        mutation CreateUser(input: { $username: String! $password: String! $email: String!}) {
-          createUser(username: $username email: $email password: $password) {
+        mutation CreateUser($username: String! $email: String!) {
+          createUser(input: { username: $username email: $email})  {
               username
               id
             } 
@@ -81,14 +112,15 @@ class AppSyncAPI extends GraphQLDataSource {
       const results = await this.mutation(CREATE_USER, {
         variables: {
           username,
-          password,
           email
         }
       })
 
-      console.log("User results: ", results)
+      const newUser = results.data.createUser
 
-      return results;
+      console.log(newUser)
+
+      return newUser;
     } catch (e) {
       console.error(e);
     }

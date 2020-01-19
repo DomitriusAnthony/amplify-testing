@@ -3,8 +3,8 @@ import { useMutation, gql } from '@apollo/client';
 import { Auth } from 'aws-amplify';
 
 const CREATE_USER = gql`
-  mutation CreateUser($email: String! $username: String) {
-    createuUser(email: $email username: $username) {
+  mutation CreateUser($email: String! $username: String!) {
+    createUser(user: {email: $email username: $username})  {
       username
       id
     } 
@@ -24,7 +24,9 @@ export default function Signup(props) {
   });
 
   const signUp = async () => {
+
     const { email, username, password } = userFields;
+
     try {
       await Auth.signUp({ username, email, password }).then(() => createUser({ variables: { username, email } }));
     } catch (e) {
