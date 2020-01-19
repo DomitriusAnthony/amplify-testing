@@ -10,17 +10,23 @@ const CREATE_GATHERING = gql`
 `
 
 export default function CreateGatheringForm(props) {
-  console.log(props.user);
   const [gathering, setGathering] = React.useState();
   const [createGathering] = useMutation(CREATE_GATHERING);
   return (
     <form onSubmit={e => {
       e.preventDefault();
 
+      const data = {
+        ...gathering,
+        ownerId: props.user.id
+      }
+
+      console.log(data);
+
       createGathering({
         variables: {
           userId: props.user.id,
-          gathering
+          gathering: data
         }
       })
     }}>
